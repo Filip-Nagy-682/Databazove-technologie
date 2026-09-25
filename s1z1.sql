@@ -102,5 +102,13 @@ HAVING SUM(o.sales) > 2000;
 -- Úloha 11 -------------------------------------------------------------------
 
 SELECT c.region, SUM(o.sales), AVG(o.discount),count(o.order_id) FROM customers c
-LEFT JOIN orders o on o.customer_id = c.customer_id
+LEFT JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.region;
+
+-- Úloha 12 -------------------------------------------------------------------
+
+SELECT c.region,
+COUNT(CASE WHEN o.sales > 1000 THEN 1 END) AS "high-value",
+COUNT(CASE  WHEN o.sales <= 1000 THEN 1 END) AS "low-value" FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY c.region;
