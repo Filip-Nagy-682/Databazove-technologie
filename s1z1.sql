@@ -73,3 +73,9 @@ GROUP BY p.product_id;
 
 SELECT c.customer_name, o.order_id, o.sales FROM customers c
 FULL OUTER JOIN orders o ON o.customer_id = c.customer_id;
+
+-- Úloha 7 --------------------------------------------------------------------
+
+SELECT c.region, SUM(o.sales) FROM customers c
+INNER JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.region;
