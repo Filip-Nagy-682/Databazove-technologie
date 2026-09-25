@@ -62,3 +62,9 @@ INNER JOIN products p ON p.product_id = o.product_id;
 SELECT c.region, SUM(o.sales) FROM customers c
 LEFT JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY c.region;
+
+-- Úloha 5 --------------------------------------------------------------------
+
+SELECT p.product_name, SUM(o.sales) FROM products p
+LEFT JOIN orders o ON o.product_id = p.product_id
+GROUP BY p.product_id;
