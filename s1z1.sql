@@ -98,3 +98,9 @@ SELECT c.customer_name, SUM(o.sales) FROM customers c
 LEFT JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY c.customer_id
 HAVING SUM(o.sales) > 2000;
+
+-- Úloha 11 -------------------------------------------------------------------
+
+SELECT c.region, SUM(o.sales), AVG(o.discount),count(o.order_id) FROM customers c
+LEFT JOIN orders o on o.customer_id = c.customer_id
+GROUP BY c.region;
