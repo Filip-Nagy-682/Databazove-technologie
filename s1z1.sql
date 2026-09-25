@@ -83,5 +83,11 @@ GROUP BY c.region;
 -- Úloha 8 --------------------------------------------------------------------
 
 SELECT c.customer_name, COUNT(o.order_id) FROM customers c
-LEFT JOIN orders o on o.customer_id = c.customer_id
+LEFT JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY c.customer_id;
+
+-- Úloha 9 --------------------------------------------------------------------
+
+SELECT p.category, AVG(o.discount) FROM products p
+LEFT JOIN orders o ON o.product_id = p.product_id
+GROUP BY p.category;
