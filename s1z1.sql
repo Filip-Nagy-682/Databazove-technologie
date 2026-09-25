@@ -91,3 +91,10 @@ GROUP BY c.customer_id;
 SELECT p.category, AVG(o.discount) FROM products p
 LEFT JOIN orders o ON o.product_id = p.product_id
 GROUP BY p.category;
+
+-- Úloha 10 -------------------------------------------------------------------
+
+SELECT c.customer_name, SUM(o.sales) FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.customer_id
+HAVING SUM(o.sales) > 2000;
