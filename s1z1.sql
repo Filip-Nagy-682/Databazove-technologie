@@ -50,3 +50,9 @@ SELECT o.order_id, c.customer_name, o.sales FROM orders o
 INNER JOIN customers c ON c.customer_id = o.customer_id
 WHERE o.sales > 500
 ORDER BY o.sales DESC;
+
+-- Úloha 3 --------------------------------------------------------------------
+
+SELECT o.order_id, c.customer_name, p.category, o.sales FROM orders o
+INNER JOIN customers c ON c.customer_id = o.customer_id
+INNER JOIN products p ON p.product_id = o.product_id;
