@@ -109,6 +109,15 @@ GROUP BY c.region;
 
 SELECT c.region,
 COUNT(CASE WHEN o.sales > 1000 THEN 1 END) AS "high-value",
-COUNT(CASE  WHEN o.sales <= 1000 THEN 1 END) AS "low-value" FROM customers c
+COUNT(CASE WHEN o.sales <= 1000 THEN 1 END) AS "low-value" FROM customers c
 LEFT JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY c.region;
+
+-- Úloha 13 -------------------------------------------------------------------
+
+SELECT c.customer_name, SUM(o.sales), AVG(o.discount), COUNT(o.order_id),
+CASE WHEN SUM(o.sales) > 2500 THEN 'VIP' ELSE 'REGULAR' END AS type
+FROM customers c
+INNER JOIN orders o on o.customer_id = c.customer_id
+GROUP BY c.customer_id
+ORDER BY SUM(o.sales) DESC;
