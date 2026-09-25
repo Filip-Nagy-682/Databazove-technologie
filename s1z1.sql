@@ -56,3 +56,9 @@ ORDER BY o.sales DESC;
 SELECT o.order_id, c.customer_name, p.category, o.sales FROM orders o
 INNER JOIN customers c ON c.customer_id = o.customer_id
 INNER JOIN products p ON p.product_id = o.product_id;
+
+-- Úloha 4 --------------------------------------------------------------------
+
+SELECT c.region, SUM(o.sales) FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.region;
