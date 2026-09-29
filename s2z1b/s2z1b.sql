@@ -1,0 +1,32 @@
+-- Active: 1790280629501@@127.0.0.1@5432@datacraftinglab_db
+
+-- Úloha 1 --------------------------------------------------------------------
+
+-- 1. Vytvorenie databázy
+CREATE DATABASE datacraftinglab_db;
+
+-- 2. Vytvorenie tabuľky flourmills_sales
+CREATE TABLE flourmills_sales(
+    sales_id            INT PRIMARY KEY,
+    sales_date          DATE,
+    region              VARCHAR(100),
+    state               VARCHAR(100),
+    product_category    VARCHAR(100),
+    produtc_name        VARCHAR(150),
+    customer_type       VARCHAR(100),
+    customer_id         INT,
+    quantity_sold       INT,
+    unit_price          NUMERIC(18, 2),
+    discount_rate       INT,
+    payment_method      VARCHAR(100),
+    sales_rep           VARCHAR(150),
+    warehouse           VARCHAR(100),
+    delivery_status     VARCHAR(100),
+    order_channel       VARCHAR(100),
+    batch_number        INT,
+    production_date     DATE,
+    total_amount        NUMERIC(18, 2)
+);
+
+-- 5. Overovanie importovaných dát
+SELECT * FROM flourmills_sales;
