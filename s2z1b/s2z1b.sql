@@ -52,5 +52,10 @@ ORDER BY sales_id ASC;
 
 SELECT product_name, total_amount, (
     SELECT AVG(total_amount) FROM flourmills_sales
-) AS avg_amount FROM flourmills_sales
-WHERE total_amount = 9511208.41;
+) AS avg_amount FROM flourmills_sales;
+
+-- Úloha 5 --------------------------------------------------------------------
+
+SELECT product_name, total_amount, total_amount / (
+    SELECT SUM(total_amount) FROM flourmills_sales
+) AS amount_share FROM flourmills_sales
