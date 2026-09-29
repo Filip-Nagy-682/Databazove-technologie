@@ -8,7 +8,7 @@ CREATE DATABASE datacraftinglab_db;
 -- 2. Vytvorenie tabuľky flourmills_sales
 CREATE TABLE flourmills_sales(
     sales_id            INT PRIMARY KEY,
-    sales_date          DATE,
+    sale_date           DATE,
     region              VARCHAR(100),
     state               VARCHAR(100),
     product_category    VARCHAR(100),
@@ -59,3 +59,12 @@ SELECT product_name, total_amount, (
 SELECT product_name, total_amount, total_amount / (
     SELECT SUM(total_amount) FROM flourmills_sales
 ) AS amount_share FROM flourmills_sales
+
+-- Úloha 6 --------------------------------------------------------------------
+
+
+SELECT * FROM (
+    SELECT EXTRACT(MONTH FROM sale_date) AS month, SUM(total_amount) AS monthly_sale FROM flourmills_sales
+    GROUP BY month
+)
+ORDER BY monthly_sale;
