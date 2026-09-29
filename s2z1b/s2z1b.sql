@@ -62,9 +62,17 @@ SELECT product_name, total_amount, total_amount / (
 
 -- Úloha 6 --------------------------------------------------------------------
 
-
 SELECT * FROM (
     SELECT EXTRACT(MONTH FROM sale_date) AS month, SUM(total_amount) AS monthly_sale FROM flourmills_sales
     GROUP BY month
 )
 ORDER BY monthly_sale;
+
+-- Úloha 7 --------------------------------------------------------------------
+
+SELECT * FROM (
+    SELECT product_category, SUM(total_amount) AS total_sales FROM flourmills_sales
+    GROUP BY product_category
+)
+WHERE total_sales > 50000000
+ORDER BY total_sales DESC;
