@@ -12,7 +12,7 @@ CREATE TABLE flourmills_sales(
     region              VARCHAR(100),
     state               VARCHAR(100),
     product_category    VARCHAR(100),
-    produtc_name        VARCHAR(150),
+    product_name        VARCHAR(150),
     customer_type       VARCHAR(100),
     customer_id         INT,
     quantity_sold       INT,
@@ -30,3 +30,12 @@ CREATE TABLE flourmills_sales(
 
 -- 5. Overovanie importovaných dát
 SELECT * FROM flourmills_sales;
+
+-- Úloha 2 --------------------------------------------------------------------
+
+SELECT product_name, total_amount FROM flourmills_sales
+WHERE total_amount > (
+    SELECT AVG(total_amount) FROM flourmills_sales
+);
+
+-- Úloha 3 --------------------------------------------------------------------
