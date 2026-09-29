@@ -47,3 +47,10 @@ WHERE product_category = (
     ORDER BY SUM(total_amount) DESC LIMIT 1
 )
 ORDER BY sales_id ASC;
+
+-- Úloha 4 --------------------------------------------------------------------
+
+SELECT product_name, total_amount, (
+    SELECT AVG(total_amount) FROM flourmills_sales
+) AS avg_amount FROM flourmills_sales
+WHERE total_amount = 9511208.41;
