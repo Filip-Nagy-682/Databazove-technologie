@@ -117,3 +117,11 @@ WHERE EXISTS(
     GROUP BY sub.product_category
     HAVING COUNT(DISTINCT sub.region) > 3
 );
+
+-- Úloha 13 -------------------------------------------------------------------
+
+SELECT region, sales_id FROM flourmills_sales main
+WHERE EXISTS(
+    SELECT 1 FROM flourmills_sales sub
+    WHERE EXTRACT(YEAR FROM sale_date) = 2024 AND sub.region = main.region
+);
