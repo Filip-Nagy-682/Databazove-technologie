@@ -84,3 +84,10 @@ WHERE total_amount > (
     SELECT AVG(total_amount) FROM flourmills_sales sub
     WHERE sub.product_category = main.product_category
 );
+
+-- Úloha 9 --------------------------------------------------------------------
+
+SELECT product_name, region, total_amount, (
+    SELECT MIN(total_amount) AS region_min_amount FROM flourmills_sales sub
+    WHERE sub.region = main.region
+) FROM flourmills_sales main;
