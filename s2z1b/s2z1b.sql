@@ -125,3 +125,11 @@ WHERE EXISTS(
     SELECT 1 FROM flourmills_sales sub
     WHERE EXTRACT(YEAR FROM sale_date) = 2024 AND sub.region = main.region
 );
+
+-- Úloha 14 -------------------------------------------------------------------
+
+SELECT DISTINCT product_category FROM flourmills_sales main
+WHERE NOT EXISTS(
+    SELECT 1 FROM flourmills_sales sub
+    WHERE sub.product_category = main.product_category AND total_amount > 500000
+);
