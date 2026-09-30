@@ -91,3 +91,11 @@ SELECT product_name, region, total_amount, (
     SELECT MIN(total_amount) AS region_min_amount FROM flourmills_sales sub
     WHERE sub.region = main.region
 ) FROM flourmills_sales main;
+
+-- Úloha 10 -------------------------------------------------------------------
+
+SELECT product_name FROM flourmills_sales main
+WHERE EXISTS(
+    SELECT COUNT(DISTINCT EXTRACT(MONTH FROM sale_date)) FROM flourmills_sales sub
+    WHERE sub.product_name = main.product_name
+);
