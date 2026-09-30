@@ -99,3 +99,11 @@ WHERE EXISTS(
     SELECT COUNT(DISTINCT EXTRACT(MONTH FROM sale_date)) FROM flourmills_sales sub
     WHERE sub.product_name = main.product_name
 );
+
+-- Úloha 11 -------------------------------------------------------------------
+
+SELECT product_category, product_name, total_amount FROM flourmills_sales main
+WHERE EXISTS (
+    SELECT 1 FROM flourmills_sales sub
+    WHERE sub.product_category = main.product_category AND main.total_amount > 200000
+);
