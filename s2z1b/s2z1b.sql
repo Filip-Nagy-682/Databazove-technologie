@@ -133,3 +133,11 @@ WHERE NOT EXISTS(
     SELECT 1 FROM flourmills_sales sub
     WHERE sub.product_category = main.product_category AND total_amount > 500000
 );
+
+-- Úloha 15 -------------------------------------------------------------------
+
+SELECT region FROM flourmills_sales main
+WHERE NOT EXISTS(
+    SELECT 1 FROM flourmills_sales sub
+    WHERE sub.region = main.region AND product_category = 'Flour'
+);
