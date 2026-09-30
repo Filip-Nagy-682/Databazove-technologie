@@ -103,7 +103,17 @@ WHERE EXISTS(
 -- Úloha 11 -------------------------------------------------------------------
 
 SELECT product_category, product_name, total_amount FROM flourmills_sales main
-WHERE EXISTS (
+WHERE EXISTS(
     SELECT 1 FROM flourmills_sales sub
     WHERE sub.product_category = main.product_category AND main.total_amount > 200000
+);
+
+-- Úloha 12 -------------------------------------------------------------------
+
+SELECT DISTINCT product_category FROM flourmills_sales main
+WHERE EXISTS(
+    SELECT 1 FROM flourmills_sales sub
+    WHERE sub.product_category = main.product_category
+    GROUP BY sub.product_category
+    HAVING COUNT(DISTINCT sub.region) > 3
 );
