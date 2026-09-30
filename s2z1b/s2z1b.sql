@@ -76,3 +76,11 @@ SELECT * FROM (
 )
 WHERE total_sales > 50000000
 ORDER BY total_sales DESC;
+
+-- Úloha 8 --------------------------------------------------------------------
+
+SELECT product_name, product_category, total_amount FROM flourmills_sales main
+WHERE total_amount > (
+    SELECT AVG(total_amount) FROM flourmills_sales sub
+    WHERE sub.product_category = main.product_category
+);
