@@ -15,3 +15,8 @@ SELECT c.region, DATE_TRUNC('month', o.order_date), SUM(o.sales) AS "monthly_sal
 INNER JOIN orders o ON o.customer_id = c.customer_id
 GROUP BY DATE_TRUNC('month', o.order_date), c.region
 HAVING c.region = 'West';
+
+-- Úloha 3 --------------------------------------------------------------------
+
+CREATE VIEW analyst_orders AS
+SELECT order_id, customer_id, product_id, sales, quantity, discount FROM ORDERS;
