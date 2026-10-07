@@ -20,3 +20,7 @@ HAVING c.region = 'West';
 
 CREATE VIEW analyst_orders AS
 SELECT order_id, customer_id, product_id, sales, quantity, discount FROM ORDERS;
+
+-- Úloha 4 --------------------------------------------------------------------
+
+CREATE INDEX idx_orders_customer_id ON orders(customer_id);
