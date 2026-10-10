@@ -40,3 +40,10 @@ CREATE INDEX idx_orders_region_category ON orders(customer_id, order_date);
 SELECT * FROM orders o
 INNER JOIN customers c ON c.customer_id = o.customer_id
 WHERE c.region = 'West';
+
+-- Úloha 7 --------------------------------------------------------------------
+
+EXPLAIN ANALYZE
+SELECT *
+FROM orders
+WHERE customer_id = 'C001';
