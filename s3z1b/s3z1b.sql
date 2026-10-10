@@ -34,3 +34,15 @@ rank_cte AS(
 SELECT * FROM rank_cte
 WHERE category_rank = 1 OR category_rank = 3
 ORDER BY (product_category, category_rank);
+
+-- Úloha 4 --------------------------------------------------------------------
+
+WITH customer_revenue AS(
+    SELECT customer_type, SUM(total_amount) AS revenue FROM flourmills_sales
+    GROUP BY customer_type
+),
+total_customer_revenue AS(
+    SELECT *, SUM(revenue) OVER() AS total_revenue,  ROUND(revenue /SUM(revenue) OVER() * 100, 2) AS revenue_percentage from customer_revenue
+)
+SELECT * FROM total_customer_revenue
+ORDER BY revenue DESC;
