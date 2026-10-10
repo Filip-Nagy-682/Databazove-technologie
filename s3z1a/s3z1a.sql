@@ -72,3 +72,28 @@ ALTER DATABASE retail_sales SET datestyle TO 'ISO, MDY';
 -- 6. Overenie importovaných dát
 SELECT *
 FROM orders;
+
+-- Úloha 9 --------------------------------------------------------------------
+
+CREATE PROCEDURE get_customer_sales(
+    customer_id_ VARCHAR(20)
+)
+LANGUAGE plpgsql
+AS $procedure$
+DECLARE
+    total NUMERIC(18, 2);
+    sale_count INT;
+BEGIN
+    SELECT SUM(sales) FROM orders
+    WHERE customer_id = customer_id_
+    INTO total;
+
+    SELECT COUNT(sales) FROM orders
+    WHERE customer_id = customer_id_
+    INTO sale_count;
+
+    RAISE NOTICE 'Customer % has % total sales across % sales', customer_id_, total, sale_count;
+END;
+$procedure$;
+
+CALL get_customer_sales('CUST00001');
