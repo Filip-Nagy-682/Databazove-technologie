@@ -9,3 +9,12 @@ WITH daily_sales AS(
 SELECT * FROM daily_sales
 WHERE total_daily_sales > 3000000
 ORDER BY total_daily_sales DESC;
+
+-- Úloha 2 --------------------------------------------------------------------
+
+WITH category_sales AS(
+    SELECT product_category, SUM(total_amount) AS total_category_sales FROM flourmills_sales
+    GROUP BY product_category
+)
+SELECT * FROM category_sales
+ORDER BY total_category_sales DESC;
