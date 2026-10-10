@@ -60,3 +60,16 @@ WHERE row_number = (
     SELECT MIN(row_number) FROM customer_orders i
     WHERE i.customer_id = o.customer_id
 );
+
+-- Úloha 6 --------------------------------------------------------------------
+
+WITH RECURSIVE bounds AS(
+    SELECT MIN(sale_date) AS minimum, MAX(sale_date) AS maximum FROM flourmills_sales
+),
+dates AS(
+    SELECT minimum AS day, maximum FROM bounds b
+    UNION ALL
+    SELECT day + 1, maximum FROM dates
+    WHERE day < maximum
+)
+SELECT * FROM dates;
