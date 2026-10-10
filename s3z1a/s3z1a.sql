@@ -97,3 +97,25 @@ END;
 $procedure$;
 
 CALL get_customer_sales('CUST00001');
+
+-- Úloha 10 -------------------------------------------------------------------
+
+CREATE PROCEDURE apply_regional_discount(
+    region_name VARCHAR(20),
+    discount_rate NUMERIC(2, 2)
+)
+LANGUAGE plpgsql
+AS $procedure$
+BEGIN
+    UPDATE orders
+    SET sales = sales * (1 - discount_rate)
+    WHERE region = region_name;
+
+    RAISE NOTICE 'A discount of % has been applied for % region', discount_rate, region_name;
+END;
+$procedure$;
+
+SELECT sales FROM orders
+WHERE region = 'West';
+
+CALL apply_regional_discount('West', 0.10);
