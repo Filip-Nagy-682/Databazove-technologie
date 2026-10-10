@@ -46,3 +46,17 @@ total_customer_revenue AS(
 )
 SELECT * FROM total_customer_revenue
 ORDER BY revenue DESC;
+
+-- Úloha 5 --------------------------------------------------------------------
+
+WITH customer_orders AS(
+    SELECT customer_id, product_name, sale_date, total_amount, ROW_NUMBER() OVER(
+        PARTITION BY customer_id
+        ORDER BY sale_date DESC
+    ) FROM flourmills_sales
+)
+SELECT customer_id, product_name, sale_date, total_amount FROM customer_orders o
+WHERE row_number = (
+    SELECT MIN(row_number) FROM customer_orders i
+    WHERE i.customer_id = o.customer_id
+);
