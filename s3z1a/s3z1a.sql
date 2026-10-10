@@ -1,4 +1,4 @@
--- Active: 1791371952571@@127.0.0.1@5432@superstore
+-- Active: 1790280629501@@127.0.0.1@5432@superstore
 
 -- Úloha 1 --------------------------------------------------------------------
 
@@ -32,3 +32,11 @@ CREATE INDEX idx_orders_order_date ON orders(order_date);
 SELECT DATE_TRUNC('month', order_date), SUM(sales) FROM orders
 GROUP BY DATE_TRUNC('month', order_date)
 ORDER BY DATE_TRUNC('month', order_date) ASC;
+
+-- Úloha 6 --------------------------------------------------------------------
+
+CREATE INDEX idx_orders_region_category ON orders(customer_id, order_date);
+
+SELECT * FROM orders o
+INNER JOIN customers c ON c.customer_id = o.customer_id
+WHERE c.region = 'West';
