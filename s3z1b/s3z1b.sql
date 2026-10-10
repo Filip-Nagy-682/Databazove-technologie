@@ -18,3 +18,19 @@ WITH category_sales AS(
 )
 SELECT * FROM category_sales
 ORDER BY total_category_sales DESC;
+
+-- Úloha 3 --------------------------------------------------------------------
+
+WITH category_sales AS(
+    SELECT product_category, SUM(total_amount) AS total_product_sales FROM flourmills_sales
+    GROUP BY (product_category, product_name)
+),
+rank_cte AS(
+        SELECT *, RANK() OVER(
+        PARTITION BY product_category
+        ORDER BY total_product_sales DESC
+    ) AS category_rank FROM category_sales
+)
+SELECT * FROM rank_cte
+WHERE category_rank = 1 OR category_rank = 3
+ORDER BY (product_category, category_rank);
