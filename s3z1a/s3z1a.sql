@@ -1,4 +1,4 @@
--- Active: 1790280629501@@127.0.0.1@5432@superstore
+-- Active: 1790280629501@@127.0.0.1@5432@retail_sales
 
 -- Úloha 1 --------------------------------------------------------------------
 
@@ -47,3 +47,28 @@ EXPLAIN ANALYZE
 SELECT *
 FROM orders
 WHERE customer_id = 'C001';
+
+-- Úloha 8 --------------------------------------------------------------------
+
+-- 1. Vytvorenie databázy
+CREATE DATABASE retail_sales;
+
+-- 2. Vytvorenie tabuľky orders
+CREATE TABLE orders(
+    order_id    VARCHAR(20) PRIMARY KEY,
+    customer_id VARCHAR(20) NOT NULL,
+    product_id  VARCHAR(20) NOT NULL,
+    order_date  DATE NOT NULL,
+    region      VARCHAR(20) NOT NULL,
+    category    VARCHAR(50) NOT NULL,
+    ship_mode   VARCHAR(30) NOT NULL,
+    sales       NUMERIC(18,2) NOT NULL,
+    profit      NUMERIC(18,2) NOT NULL
+);
+
+-- 3. Nastavenie dátového formátu databázy
+ALTER DATABASE retail_sales SET datestyle TO 'ISO, MDY';
+
+-- 6. Overenie importovaných dát
+SELECT *
+FROM orders;
