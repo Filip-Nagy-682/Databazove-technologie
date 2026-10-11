@@ -67,9 +67,31 @@ WITH RECURSIVE bounds AS(
     SELECT MIN(sale_date) AS minimum, MAX(sale_date) AS maximum FROM flourmills_sales
 ),
 dates AS(
-    SELECT minimum AS day, maximum FROM bounds b
+    SELECT minimum AS day FROM bounds
     UNION ALL
-    SELECT day + 1, maximum FROM dates
-    WHERE day < maximum
+    SELECT day + 1 FROM dates
+    WHERE day < (SELECT maximum FROM bounds)
 )
 SELECT * FROM dates;
+
+-- Úloha 7 --------------------------------------------------------------------
+
+WITH RECURSIVE monthly_revenue AS(
+    SELECT DATE_TRUNC('month', sale_date) as month, SUM(total_amount) AS revenue FROM flourmills_sales
+    GROUP BY DATE_TRUNC('month', sale_date)
+),
+ordered_months AS(
+    SELECT ROW_NUMBER() OVER(
+        ORDER BY month
+    ) AS rn, month, revenue FROM monthly_revenue
+),
+cumulative_target AS(
+    SELECT rn, month, revenue, revenue AS cumulative_revenue FROM ordered_months
+    WHERE rn = 1
+    UNION ALL
+    SELECT rn + 1, month, revenue, cumulative_revenue + (SELECT revenue FROM ordered_months WHERE rn = rn + 1)
+    FROM cumulative_target
+    WHERE cumulative_revenue < 500000000
+)
+SELECT DISTINCT * FROM cumulative_target
+ORDER BY rn;
