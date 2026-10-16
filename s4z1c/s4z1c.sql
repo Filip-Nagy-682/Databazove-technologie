@@ -1,4 +1,4 @@
--- Active: 1791976164089@@127.0.0.1@5432@retail
+-- Active: 1790280629501@@127.0.0.1@5432@retail
 
 -- Úloha 1 --------------------------------------------------------------------
 
@@ -52,3 +52,20 @@ WITH invoices AS(
 SELECT *, next_invoice_date - invoice_date AS days_to_next_invoice FROM invoices
 WHERE next_invoice_date IS NOT NULL AND next_invoice_date - invoice_date <> 0
 ORDER BY next_invoice_date - invoice_date DESC;
+
+-- Úloha 5 --------------------------------------------------------------------
+
+WITH orders AS(
+    SELECT stock_code, invoice_no, invoice_date, unit_price AS current_price, LAG(unit_price) OVER(
+        PARTITION BY stock_code
+        ORDER BY invoice_date ASC
+    ) AS previous_price FROM retail_sales
+),
+last_orders AS(
+    SELECT stock_code, MAX(invoice_date) as date FROM orders
+    GROUP BY stock_code
+)
+SELECT o.stock_code, o.invoice_no, o.current_price, o.previous_price, o.current_price - o.previous_price AS price_difference FROM orders o
+INNER JOIN last_orders lo ON lo.date = o.invoice_date AND lo.stock_code = o.stock_code
+WHERE previous_price IS NOT NULL AND current_price <> previous_price
+ORDER BY invoice_date ASC;
