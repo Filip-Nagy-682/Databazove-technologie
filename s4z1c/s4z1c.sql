@@ -92,3 +92,14 @@ SELECT *, NTILE(4) OVER(
     ORDER BY total_amount DESC
 ) AS sales_quartile FROM monthly_country_amount
 ORDER BY (country, month) ASC;
+
+-- Úloha 8 --------------------------------------------------------------------
+
+WITH ordered_customer_orders AS(
+    SELECT customer_id, invoice_no, invoice_date, stock_code, description, quantity, unit_price, ROW_NUMBER() OVER(
+        PARTITION BY customer_id
+        ORDER BY invoice_date ASC
+    ) AS "order" FROM retail_sales
+)
+SELECT customer_id, invoice_no, invoice_date, stock_code, description, quantity, unit_price FROM ordered_customer_orders
+WHERE "order" = 1;
