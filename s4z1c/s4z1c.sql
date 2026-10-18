@@ -117,3 +117,19 @@ ordered_orders AS(
 )
 SELECT * FROM ordered_orders
 WHERE row_num <= 3;
+
+-- Úloha 10 -------------------------------------------------------------------
+
+WITH monthly_customer_totals AS(
+    SELECT country, DATE_TRUNC('month', invoice_date) AS month, customer_id, SUM(quantity * unit_price) AS total_amount FROM retail_sales
+    WHERE customer_id IS NOT NULL
+    GROUP BY (country, DATE_TRUNC('month', invoice_date), customer_id)
+),
+ordered_customer_totals AS(
+    SELECT *, DENSE_RANK() OVER(
+        PARTITION BY (country, month)
+        ORDER BY total_amount DESC
+    ) AS sales_rank FROM monthly_customer_totals
+)
+SELECT * FROM ordered_customer_totals
+ORDER BY (country, month, sales_rank, customer_id);
