@@ -29,3 +29,14 @@ ranked_total_profits AS(
     ) AS profit_dense_rank FROM customer_total_profits
 )
 SELECT * FROM ranked_total_profits;
+
+-- Úloha 3 --------------------------------------------------------------------
+
+WITH total_customer_sales AS(
+    SELECT c.customer_name, SUM(o.sales) AS total_sales FROM customers c
+    INNER JOIN orders o ON o.customer_id = c.customer_id
+    GROUP BY c.customer_id
+)
+SELECT *, NTILE(4) OVER(
+    ORDER BY total_sales
+) FROM total_customer_sales;
