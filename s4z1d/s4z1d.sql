@@ -40,3 +40,14 @@ WITH total_customer_sales AS(
 SELECT *, NTILE(4) OVER(
     ORDER BY total_sales
 ) FROM total_customer_sales;
+
+-- Úloha 4 --------------------------------------------------------------------
+
+WITH monthly_sales AS(
+    SELECT DATE_TRUNC('month', order_date) AS month, SUM(sales) AS monthly_sales FROM orders
+    GROUP BY DATE_TRUNC('month', order_date)
+)
+SELECT *,
+    LAG(monthly_sales) OVER (ORDER BY month) AS prev_monthly_sales,
+    LEAD(monthly_sales) OVER (ORDER BY month) as next_monthly_sales FROM monthly_sales
+ORDER BY month ASC;
