@@ -51,3 +51,29 @@ SELECT *,
     LAG(monthly_sales) OVER (ORDER BY month) AS prev_monthly_sales,
     LEAD(monthly_sales) OVER (ORDER BY month) as next_monthly_sales FROM monthly_sales
 ORDER BY month ASC;
+
+-- Úloha 5 --------------------------------------------------------------------
+
+SELECT 
+    p.category,
+    p.product_name,
+    SUM(o.sales) AS product_sales,
+    SUM(SUM(o.sales)) OVER (PARTITION BY p.category) AS category_total,
+    ROUND(
+        SUM(o.sales) * 100.0 /
+        SUM(SUM(o.sales)) OVER (PARTITION BY p.category),
+        2
+    ) AS pct_of_category
+FROM orders o
+JOIN products p ON o.product_id = p.product_id
+GROUP BY p.category, p.product_name;
+
+WITH total_product_sales AS(
+    SELECT category, product_name, SUM(o.sales) AS product_sales FROM products p
+    INNER JOIN orders o ON o.product_id = p.product_id
+    GROUP BY p.product_id
+),
+total_category_sales AS(
+    SELECT *, SUM(product_sales) OVER(PARTITION BY category) AS cetegory_total FROM total_product_sales
+)
+SELECT *, ROUND(product_sales / cetegory_total * 100, 2) AS pct_of_category FROM total_category_sales;
