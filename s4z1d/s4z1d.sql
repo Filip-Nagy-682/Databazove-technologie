@@ -77,3 +77,14 @@ total_category_sales AS(
     SELECT *, SUM(product_sales) OVER(PARTITION BY category) AS cetegory_total FROM total_product_sales
 )
 SELECT *, ROUND(product_sales / cetegory_total * 100, 2) AS pct_of_category FROM total_category_sales;
+
+-- Úloha 6 --------------------------------------------------------------------
+
+WITH dated_customer_list AS(
+    SELECT DISTINCT c.customer_id, c.customer_name,
+        MAX(o.order_date) OVER(PARTITION BY c.customer_id) AS last_order_date,
+        MAX(o.order_date) OVER() AS latest_order_date FROM customers c
+    INNER JOIN orders o ON o.customer_id = c.customer_id
+)
+SELECT *, latest_order_date - last_order_date <= 90 as active FROM dated_customer_list
+ORDER BY customer_id;
