@@ -103,3 +103,17 @@ WITH ordered_customer_orders AS(
 )
 SELECT customer_id, invoice_no, invoice_date, stock_code, description, quantity, unit_price FROM ordered_customer_orders
 WHERE "order" = 1;
+
+-- Úloha 9 --------------------------------------------------------------------
+
+WITH valued_orders AS(
+    SELECT invoice_no, stock_code, description, quantity, unit_price, quantity * unit_price AS amount FROM retail_sales
+),
+ordered_orders AS(
+    SELECT *, ROW_NUMBER() OVER(
+        PARTITION BY invoice_no
+        ORDER BY amount DESC
+    ) AS row_num FROM valued_orders
+)
+SELECT * FROM ordered_orders
+WHERE row_num <= 3;
