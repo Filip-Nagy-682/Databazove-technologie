@@ -69,3 +69,14 @@ SELECT o.stock_code, o.invoice_no, o.current_price, o.previous_price, o.current_
 INNER JOIN last_orders lo ON lo.date = o.invoice_date AND lo.stock_code = o.stock_code
 WHERE previous_price IS NOT NULL AND current_price <> previous_price
 ORDER BY invoice_date ASC;
+
+-- Úloha 6 --------------------------------------------------------------------
+
+WITH customer_amount AS(
+    SELECT customer_id, SUM(quantity * unit_price) AS total_amount FROM retail_sales
+    WHERE customer_id IS NOT NULL
+    GROUP BY customer_id
+)
+SELECT *, NTILE(4) OVER(
+    ORDER BY total_amount DESC
+) AS sales_quartile FROM customer_amount;
