@@ -133,3 +133,14 @@ ordered_customer_totals AS(
 )
 SELECT * FROM ordered_customer_totals
 ORDER BY (country, month, sales_rank, customer_id);
+
+-- Úloha 11 -------------------------------------------------------------------
+
+WITH temp AS(
+    SELECT invoice_no, stock_code, description, quantity, unit_price, DENSE_RANK() OVER(
+        PARTITION BY invoice_no
+        ORDER BY unit_price DESC
+    ) AS price_rank FROM retail_sales
+)
+SELECT * FROM temp
+WHERE price_rank <= 5;
