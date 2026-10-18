@@ -80,3 +80,15 @@ WITH customer_amount AS(
 SELECT *, NTILE(4) OVER(
     ORDER BY total_amount DESC
 ) AS sales_quartile FROM customer_amount;
+
+-- Úloha 7 --------------------------------------------------------------------
+
+WITH monthly_country_amount AS(
+    SELECT country, DATE_TRUNC('month', invoice_date) AS month, SUM(quantity * unit_price) AS total_amount FROM retail_sales
+    GROUP BY (country, DATE_TRUNC('month', invoice_date))
+)
+SELECT *, NTILE(4) OVER(
+    PARTITION BY country
+    ORDER BY total_amount DESC
+) AS sales_quartile FROM monthly_country_amount
+ORDER BY (country, month) ASC;
