@@ -103,3 +103,20 @@ monthly_diff AS(
     ROUND((monthly_sales - prev_month_sales) / prev_month_sales * 100, 2) AS growth_percentage FROM prev_monthly_sum
 )
 SELECT * FROM monthly_diff;
+
+-- Úloha 8 --------------------------------------------------------------------
+
+WITH first_customer_orders AS(
+    SELECT c.customer_id, DATE_TRUNC('month', MIN(o.order_date)) AS first_order FROM customers c
+    INNER JOIN orders o ON o.customer_id = c.customer_id
+    GROUP BY c.customer_id
+),
+valid_customers AS(
+    SELECT * FROM first_customer_orders fco
+    WHERE first_order = '2024-04-01' AND EXISTS(
+        SELECT 1 FROM customers c
+        INNER JOIN orders o ON o.customer_id = c.customer_id
+        where o.customer_id = fco.customer_id AND DATE_TRUNC('month', o.order_date) > '2024-04-01'
+    )
+)
+SELECT * FROM valid_customers;
