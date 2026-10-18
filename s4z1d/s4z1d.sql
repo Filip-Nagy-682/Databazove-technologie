@@ -88,3 +88,18 @@ WITH dated_customer_list AS(
 )
 SELECT *, latest_order_date - last_order_date <= 90 as active FROM dated_customer_list
 ORDER BY customer_id;
+
+-- Úloha 7 --------------------------------------------------------------------
+
+WITH monthly_sum AS(
+    SELECT DATE_TRUNC('month', order_date) AS month, SUM(sales) AS monthly_sales FROM orders
+    GROUP BY DATE_TRUNC('month', order_date)
+),
+prev_monthly_sum AS(
+    SELECT *, LAG(monthly_sales) OVER(ORDER BY month) AS prev_month_sales FROM monthly_sum
+),
+monthly_diff AS(
+    SELECT *, monthly_sales - prev_month_sales AS sales_change,
+    ROUND((monthly_sales - prev_month_sales) / prev_month_sales * 100, 2) AS growth_percentage FROM prev_monthly_sum
+)
+SELECT * FROM monthly_diff;
