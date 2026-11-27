@@ -1,0 +1,29 @@
+name: 's10z1c'
+version: '1.0.0'
+profile: 's10z1c'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  bronze_schema: bronze
+
+models:
+  s10z1c:
+    staging:
+      +materialized: view
+      +schema: silver
+    marts:
+      +materialized: table
+      +schema: gold
+    reporting:
+      +materialized: view
+      +schema: reporting

@@ -1,0 +1,13 @@
+version: 1
+
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: ratings
+      - name: users
+      - name: movies
+      - name: occupations
+      - name: age_group
+      - name: genres
+      - name: genres_movies
